@@ -4,11 +4,13 @@ require 'net/http'
 require 'openssl'
 require 'json'
 require './pastries.rb'
+require 'httparty'
 
 get '/' do
   puts 'hello'
   erb :index
 end
+
 
 get '/cookies' do
   @header = 'Cookies galore!'
@@ -23,6 +25,7 @@ get '/cookies' do
   erb :cookies
 end
 
+
 get '/cake' do
   @header = 'Cake galore!'
 
@@ -35,6 +38,7 @@ get '/cake' do
   @output = @cake
   erb :cake
 end
+
 
 get '/muffins' do
   @header = 'Cookies galore!'
@@ -49,48 +53,33 @@ get '/muffins' do
   erb :muffins
 end
 
-# system('touch index.html main.css main.js')
-# File.open('index.html', 'w') { |html|
-#   html.write(%(
-#     <!DOCTYPE html>
-#     <html lang="en" dir="ltr">
-#       <head>
-#         <meta charset="utf-8">
-#         <title>Cuckoo For Cupcakes</title>
-#         <link rel="stylesheet" href="./main.css">
-#       </head>
-#       <body>
-#         <h3>Welcome to Cuckoo For Cupcakes!</h3>
-#
-#         <form action="/" method="POST">
-#           <input name="query" />
-#           <button> Search by cookies... </button>
-#         </form>
-#
-#       </body>
-#     </html>
-#     ))
-# }
-#
-# File.open('main.css', 'w') { |css|
-#   css.write("
-#     body {
-#       margin: 0;
-#       display: grid;
-#       grid-template-areas: 'aside nav nav' 'aside main main' 'aside footer footer' / 15vh 55vh 30vh;
-#     }
-#
-#     #up {
-#       background-color: lightblue;
-#     }
-#
-#     #side {
-#       background-color: thistle;
-#     }
-#
-#     #down {
-#       background-color: lightpink;
-#     }
-#     ")
-# }
-#
+
+get '/search' do
+  # form
+  "<form action='/search' method='POST'>
+    <input name='search_term'>
+    </input>
+    <button type='submit'>Submit</button>
+  </form>"
+end
+
+
+post '/search' do
+  puts params
+  @input = params['search_term']
+
+  req = HTTParty.get('https://api.edamam.com/api/food-database/parser', {query:{ingr: @input, app_id: ENV['RECIPE_ID'], app_key: ENV['RECIPE_KEY']}})
+
+  @results = JSON.parse(req.body)
+  puts @results
+  @results
+
+  @output = @search
+  erb :search
+
+# erb '<%= @results %>'
+
+  # connect to api, pass in search term and api key
+  # get back a response, parse it using JSON
+  # return the responses
+end

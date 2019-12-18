@@ -26,6 +26,16 @@ class Muffin
   end
 end
 
+class Ingredients
+  attr_reader :nutrients, :calories
+  def initialize(nutrients, calories)
+    @calories = calories
+    @health = health
+
+    # render :layout => nil
+  end
+end
+
 @chocChip = Cookie.new('Your basic chocolate chip cookie, elevated', '$2.50', 'https://i2.wp.com/www.sugarspunrun.com/wp-content/uploads/2018/11/worst-chocolate-chip-cookie-recipe-1-of-1-3.jpg')
 @macadamia = Cookie.new('The best cookie in the world, EVER', '$2.50', 'https://joythebaker.com/wp-content/uploads/2016/04/vsco-photo-2-7-e1460689541808.jpg')
 @doubleChoco = Cookie.new('Diabetes', '$2.50', 'https://www.sprinklesandsprouts.com/wp-content/uploads/2016/10/Subway-Style-Double-Chocolate-Chip-Cookies.jpg')

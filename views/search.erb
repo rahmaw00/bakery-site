@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+  <p>SEARCH</p>
+    <div>
+    <% @output.each do |result| %>
+    <div>
+            <div>
+                <h4>Calories: <%= @result.nutrients%></h4>
+                <p>health: <%= @result.calories%></p>
+            </div>
+    </div>
+    <% end if @output%>
+</div>
+  </body>
+</html>
